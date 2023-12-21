@@ -1,0 +1,21 @@
+Public NotInheritable Class SplashScreen1
+    Private Sub SplashScreen1_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        Timer1.Start()
+    End Sub
+
+    Private Sub Timer1_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer1.Tick
+        pbxhighlight.Width += 5
+
+        If pbxhighlight.Width >= 100 Then
+            loading.Text = "Getting ready" & vbNewLine & "    to serve"
+            If pbxhighlight.Width >= 280 Then
+                loading.Text = "Complete!"
+                If pbxhighlight.Width >= 295 Then
+                    Form2.Show()
+                    Form2.confirmadmin.Focus()
+                    Me.Close()
+                End If
+            End If
+        End If
+    End Sub
+End Class
