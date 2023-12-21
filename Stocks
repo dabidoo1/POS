@@ -1,0 +1,295 @@
+Public Class Form2
+    Dim emptyfields(20) As Boolean
+    Private Sub Form2_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        Panel1.Visible = False
+        Button1.Visible = False
+        Button2.Visible = False
+        Button3.Visible = False
+        confirmadmin.Focus()
+        emptyfields(1) = False
+        emptyfields(2) = False
+        emptyfields(3) = False
+        emptyfields(4) = False
+        emptyfields(5) = False
+        emptyfields(6) = False
+        emptyfields(7) = False
+        emptyfields(8) = False
+        emptyfields(9) = False
+        emptyfields(10) = False
+        emptyfields(11) = False
+        emptyfields(12) = False
+        emptyfields(13) = False
+        emptyfields(14) = False
+        emptyfields(15) = False
+        emptyfields(16) = False
+        emptyfields(17) = False
+        emptyfields(18) = False
+        emptyfields(19) = False
+        goback.Visible = False
+
+    End Sub
+
+    Private Sub entervoid_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles entervoid.Click
+        americano.Text = ""
+        espresso.Text = ""
+        macchiato.Text = ""
+        local.Text = ""
+        latte.Text = ""
+        dopio.Text = ""
+        cappuccino.Text = ""
+        hotdog.Text = ""
+        banana.Text = ""
+        white.Text = ""
+        wheat.Text = ""
+        rolls.Text = ""
+        french.Text = ""
+        bacon.Text = ""
+        mozzarella.Text = ""
+        chilli.Text = ""
+        mushrooms.Text = ""
+        vegetarian.Text = ""
+        veronese.Text = ""
+        If confirmadmin.Text = "admin" Then
+            MessageBox.Show("Welcome Admin!")
+            confirmadmin.Text = ""
+            loginpanel.Visible = False
+            Panel1.Visible = True
+            Button1.Visible = True
+            Button2.Visible = True
+            Button3.Visible = True
+            goback.Visible = True
+        Else
+            MessageBox.Show("Error please try again", "Wrong password")
+            confirmadmin.Text = ""
+            confirmadmin.Focus()
+        End If
+    End Sub
+
+    Private Sub Button3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button3.Click
+        If americano.Text = "" Or americano.Text = "0" Then
+            MessageBox.Show("Error! Stock for Americano can’®?t be empty or 0", "Empty Field")
+            emptyfields(1) = False
+        Else
+            emptyfields(1) = True
+            Form1.stckamer.Text = americano.Text
+        End If
+        If espresso.Text = "" Or espresso.Text = "0" Then
+            MessageBox.Show("Error! Stock for Espresso can’®?t be empty or 0", "Empty Field")
+            emptyfields(2) = False
+        Else
+            emptyfields(2) = True
+            Form1.stckespr.Text = espresso.Text
+        End If
+        If local.Text = "" Or local.Text = "0" Then
+            MessageBox.Show("Error! Stock for Local cafe can’®?t be empty or 0", "Empty Field")
+            emptyfields(3) = False
+        Else
+            emptyfields(3) = True
+            Form1.stckloc.Text = local.Text
+        End If
+        If dopio.Text = "" Or dopio.Text = "0" Then
+            MessageBox.Show("Error! Stock for Doppio can't be empty or 0", "Empty Field")
+            emptyfields(4) = False
+        Else
+            emptyfields(4) = True
+            Form1.stckdop.Text = dopio.Text
+        End If
+        If macchiato.Text = "" Or macchiato.Text = "0" Then
+            MessageBox.Show("Error! Stock for Macchiato can’®?t be empty or 0", "Empty Field")
+            emptyfields(5) = False
+        Else
+            emptyfields(5) = True
+            Form1.stckmacch.Text = macchiato.Text
+        End If
+        If latte.Text = "" Or latte.Text = "0" Then
+            MessageBox.Show("Error! Stock for Latte can’®?t be empty or 0", "Empty Field")
+            emptyfields(6) = False
+        Else
+            emptyfields(6) = True
+            Form1.stcklatt.Text = latte.Text
+        End If
+        If cappuccino.Text = "" Or cappuccino.Text = "0" Then
+            MessageBox.Show("Error! Stock for Cappuccino can’®?t be empty or 0", "Empty Field")
+            emptyfields(7) = False
+        Else
+            emptyfields(7) = True
+            Form1.stckcapp.Text = cappuccino.Text
+        End If
+        If mozzarella.Text = "" Or mozzarella.Text = "0" Then
+            MessageBox.Show("Error! Stock for Mozzarella can’®?t be empty or 0", "Empty Field")
+            emptyfields(8) = False
+        Else
+            emptyfields(8) = True
+            Form1.stckmoz.Text = mozzarella.Text
+        End If
+        If bacon.Text = "" Or bacon.Text = "0" Then
+            MessageBox.Show("Error! Stock for Bacon can’®?t be empty or 0", "Empty Field")
+            emptyfields(9) = False
+        Else
+            emptyfields(9) = True
+            Form1.stckbac.Text = bacon.Text
+        End If
+        If chilli.Text = "" Or chilli.Text = "0" Then
+            MessageBox.Show("Error! Stock for Chili can’®?t be empty or 0", "Empty Field")
+            emptyfields(10) = False
+        Else
+            emptyfields(10) = True
+            Form1.stckchil.Text = chilli.Text
+        End If
+        If mushrooms.Text = "" Or mushrooms.Text = "0" Then
+            MessageBox.Show("Error! Stock for Mushrooms can’®?t be empty or 0", "Empty Field")
+            emptyfields(11) = False
+        Else
+            emptyfields(11) = True
+            Form1.stckmush.Text = mushrooms.Text
+        End If
+        If vegetarian.Text = "" Or vegetarian.Text = "0" Then
+            MessageBox.Show("Error! Stock for Vegetarian can’®?t be empty or 0", "Empty Field")
+            emptyfields(12) = False
+        Else
+            emptyfields(12) = True
+            Form1.stckveg.Text = vegetarian.Text
+        End If
+        If veronese.Text = "" Or veronese.Text = "0" Then
+            MessageBox.Show("Error! Stock for Veronese can’®?t be empty or 0", "Empty Field")
+            emptyfields(13) = False
+        Else
+            emptyfields(13) = True
+            Form1.stckver.Text = veronese.Text
+        End If
+        If rolls.Text = "" Or rolls.Text = "0" Then
+            MessageBox.Show("Error! Stock for Rolls can’®?t be empty or 0", "Empty Field")
+            emptyfields(14) = False
+        Else
+            emptyfields(14) = True
+            Form1.stckrolls.Text = rolls.Text
+        End If
+        If french.Text = "" Or french.Text = "0" Then
+            MessageBox.Show("Error! Stock for French can’®?t be empty or 0", "Empty Field")
+            emptyfields(15) = False
+        Else
+            emptyfields(15) = True
+            Form1.stckfrench.Text = french.Text
+        End If
+        If wheat.Text = "" Or wheat.Text = "0" Then
+            MessageBox.Show("Error! Stock for Wheat can’®?t be empty or 0", "Empty Field")
+            emptyfields(16) = False
+        Else
+            emptyfields(16) = True
+            Form1.stckwheat.Text = wheat.Text
+        End If
+        If white.Text = "" Or white.Text = "0" Then
+            MessageBox.Show("Error! Stock for White can’®?t be empty or 0", "Empty Field")
+            emptyfields(17) = False
+        Else
+            emptyfields(17) = True
+            Form1.stckwhite.Text = white.Text
+        End If
+        If banana.Text = "" Or banana.Text = "0" Then
+            MessageBox.Show("Error! Stock for Banana can’®?t be empty or 0", "Empty Field")
+            emptyfields(18) = False
+        Else
+            emptyfields(18) = True
+            Form1.stckbana.Text = banana.Text
+        End If
+        If hotdog.Text = "" Or hotdog.Text = "0" Then
+            MessageBox.Show("Error! Stock for Hotdog can’®?t be empty or 0", "Empty Field")
+            emptyfields(19) = False
+        Else
+            emptyfields(19) = True
+            Form1.stckhot.Text = hotdog.Text
+        End If
+
+        If emptyfields(1) = True And emptyfields(2) = True And emptyfields(3) = True And emptyfields(4) = True And emptyfields(5) = True And emptyfields(6) = True And emptyfields(7) = True And emptyfields(8) = True And emptyfields(9) = True And emptyfields(10) = True And emptyfields(11) = True And emptyfields(12) = True And emptyfields(13) = True And emptyfields(14) = True And emptyfields(15) = True And emptyfields(16) = True And emptyfields(17) = True And emptyfields(18) = True And emptyfields(19) = True Then
+            Dim check As String = MessageBox.Show("Please double check the stocks given", "Do you want to continue?", MessageBoxButtons.OKCancel)
+            If check = vbOK Then
+                Dim str As String = InputBox("Enter cashier name")
+                If str = "" Then
+
+                ElseIf str = " " Then
+                    MessageBox.Show("Cashier name cannot be empty", "Error")
+                Else
+                    Form1.cashier = str
+                    Me.Hide()
+                    Form1.Show()
+                End If
+            Else
+
+            End If
+            
+            
+        End If
+
+
+
+    End Sub
+    Private Sub quantwhite_keypress(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles americano.KeyPress
+        NumbersOnly(e)
+    End Sub
+    Private Sub NumbersOnly(ByVal e As System.Windows.Forms.KeyPressEventArgs)
+        If (Asc(e.KeyChar) >= 48 And Asc(e.KeyChar) <= 57 Or Asc(e.KeyChar) = 8 Or Asc(e.KeyChar) = 13) Then
+        Else
+            e.Handled = True
+            MessageBox.Show("Please enter Quantity (Numbers)", "ERROR!")
+        End If
+    End Sub
+
+    Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
+        americano.Text = Form1.stckamer.Text
+        espresso.Text = Form1.stckespr.Text
+        macchiato.Text = Form1.stckmacch.Text
+        local.Text = Form1.stckloc.Text
+        latte.Text = Form1.stcklatt.Text
+        dopio.Text = Form1.stckdop.Text
+        cappuccino.Text = Form1.stckcapp.Text
+        hotdog.Text = Form1.stckhot.Text
+        banana.Text = Form1.stckbana.Text
+        white.Text = Form1.stckwhite.Text
+        wheat.Text = Form1.stckwheat.Text
+        rolls.Text = Form1.stckrolls.Text
+        french.Text = Form1.stckfrench.Text
+        bacon.Text = Form1.stckbac.Text
+        mozzarella.Text = Form1.stckmoz.Text
+        chilli.Text = Form1.stckchil.Text
+        mushrooms.Text = Form1.stckmush.Text
+        vegetarian.Text = Form1.stckveg.Text
+        veronese.Text = Form1.stckver.Text
+
+
+    End Sub
+
+    Private Sub Button2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button2.Click
+        americano.Text = 25
+        espresso.Text = 25
+        macchiato.Text = 25
+        local.Text = 25
+        latte.Text = 25
+        dopio.Text = 25
+        cappuccino.Text = 25
+        hotdog.Text = 25
+        banana.Text = 25
+        white.Text = 25
+        wheat.Text = 25
+        rolls.Text = 25
+        french.Text = 25
+        bacon.Text = 25
+        mozzarella.Text = 25
+        chilli.Text = 25
+        mushrooms.Text = 25
+        vegetarian.Text = 25
+        veronese.Text = 25
+    End Sub
+
+    Private Sub Label12_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles goback.Click
+        confirmadmin.Text = ""
+        Me.Hide()
+        Form1.Show()
+    End Sub
+
+    Private Sub quant_keypress(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles mozzarella.KeyPress, americano.KeyPress, bacon.KeyPress, banana.KeyPress, cappuccino.KeyPress,
+         chilli.KeyPress, dopio.KeyPress, espresso.KeyPress, french.KeyPress, hotdog.KeyPress, latte.KeyPress, local.KeyPress, macchiato.KeyPress, mushrooms.KeyPress, rolls.KeyPress, vegetarian.KeyPress,
+          vegetarian.KeyPress, veronese.KeyPress, wheat.KeyPress, white.KeyPress
+        NumbersOnly(e)
+
+    End Sub
+End Class
