@@ -1,0 +1,1726 @@
+Imports System.Data.DataTable
+
+Public Class Form1
+    Private r As New Random()
+    Dim iConfirm As DialogResult
+    Dim itemcost(25) As Decimal
+    Dim ttlprice As Decimal
+    Dim columcount As Decimal
+    Dim balikitem(25) As Decimal
+    Dim index As Integer
+    Public Property cashier As String
+    Dim customername As String
+    Dim stockloaded As Boolean = True
+
+    Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        regular.Focus()
+        regular.Checked = True
+        pnlcombo.Visible = False
+        markcombo.Visible = False
+        pnlcoffee.Visible = False
+        pnlbread.Visible = False
+        pnlpizza.Visible = False
+        pnllist.Visible = False
+        markbread.Visible = False
+        marklist.Visible = False
+        markcoffee.Visible = False
+        markpiz.Visible = False
+        panelvoid.Visible = False
+        panelreceipt.Visible = False
+        customernamepanel.Visible = False
+        btnreceipt.Enabled = False
+        Timer2.Enabled = True
+        Timer1.Enabled = True
+        quantwhite.Enabled = False
+
+
+    End Sub
+    Private Sub quantwhite_keypress(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles quantwhite.KeyPress, quantwheat.KeyPress, quantamer.KeyPress, quantbac.KeyPress,
+        quantbana.KeyPress, quantcapp.KeyPress, quantchil.KeyPress, quantdop.KeyPress, quantespr.KeyPress, quantfrench.KeyPress, quanthot.KeyPress, quantlatt.KeyPress, quantloc.KeyPress,
+        quantmacch.KeyPress, quantmoz.KeyPress, quantmush.KeyPress, quantrolls.KeyPress, quantveg.KeyPress, quantver.KeyPress, txtamounttendered.KeyPress, quantcomb1.KeyPress, quantcomb2.KeyPress, quantcomb3.KeyPress
+        NumbersOnly(e)
+
+    End Sub
+    Private Sub quantwhite_keydown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles quantwhite.KeyDown, quantwheat.KeyDown, quantamer.KeyDown, quantbac.KeyDown,
+        quantbana.KeyDown, quantcapp.KeyDown, quantchil.KeyDown, quantdop.KeyDown, quantespr.KeyDown, quantfrench.KeyDown, quanthot.KeyDown, quantlatt.KeyDown, quantloc.KeyDown,
+        quantmacch.KeyDown, quantmoz.KeyDown, quantmush.KeyDown, quantrolls.KeyDown, quantveg.KeyDown, quantver.KeyDown, quantbac.KeyDown, quantcomb1.KeyDown, quantcomb2.KeyDown, quantcomb3.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            If chkwhite.Checked = True Then
+                If quantwhite.Text = String.Empty Then
+                    MessageBox.Show("Empty quantity is not valid", "Error!")
+                    quantwhite.Text = Nothing
+                ElseIf chkwhite.Checked = True And quantwhite.Text = 0 Then
+                    MessageBox.Show("Zero quantity is not valid", "Error!")
+                    quantwhite.Text = Nothing
+                Else
+                    iConfirm = MessageBox.Show("Place Order for White Bread?" & vbNewLine & vbNewLine & "White Bread" & vbTab & "Php:150.00" & vbTab & "Qty: " & quantwhite.Text & vbTab & "Total: " & itemcost(0), "Confirmation (Bread)", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                    If iConfirm = DialogResult.Yes Then
+                        chkwhite.Checked = False
+                        DataGridView1.Rows.Add("b0001", "WHITE BREAD", "150.00", "BREAD", quantwhite.Text, itemcost(0))
+                        stckwhite.Text = stckwhite.Text - CDec(quantwhite.Text)
+                        quantwhite.Text = Nothing
+                    End If
+                End If
+            ElseIf chkwheat.Checked = True Then
+                If quantwheat.Text = String.Empty Then
+                    MessageBox.Show("Empty quantity is not valid", "Error!")
+                    quantwheat.Text = Nothing
+                ElseIf chkwheat.Checked = True And quantwheat.Text = 0 Then
+                    MessageBox.Show("Zero quantity is not valid", "Error!")
+                    quantwheat.Text = Nothing
+                Else
+                    iConfirm = MessageBox.Show("Place Order for Wheat Bread?" & vbNewLine & vbNewLine & "Wheat Bread" & vbTab & "Php:130.00" & vbTab & "Qty: " & quantwheat.Text & vbTab & "Total: " & itemcost(2), "Confirmation (Bread)", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                    If iConfirm = DialogResult.Yes Then
+                        chkwheat.Checked = False
+                        DataGridView1.Rows.Add("b0002", "WHEAT BREAD", "130.00", "BREAD", quantwheat.Text, itemcost(2))
+                        stckwheat.Text = stckwheat.Text - CDec(quantwheat.Text)
+                        quantwheat.Text = Nothing
+                    End If
+                End If
+            ElseIf chkrolls.Checked = True Then
+                If quantrolls.Text = String.Empty Then
+                    MessageBox.Show("Empty quantity is not valid", "Error!")
+                    quantrolls.Text = Nothing
+                ElseIf chkrolls.Checked = True And quantrolls.Text = 0 Then
+                    MessageBox.Show("Zero quantity is not valid", "Error!")
+                    quantrolls.Text = Nothing
+                Else
+                    iConfirm = MessageBox.Show("Place Order for Rolls Bread?" & vbNewLine & vbNewLine & "Rolls Bread" & vbTab & "Php:90.00" & vbTab & "Qty: " & quantrolls.Text & vbTab & "Total: " & itemcost(9), "Confirmation (Bread)", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                    If iConfirm = DialogResult.Yes Then
+                        chkrolls.Checked = False
+                        DataGridView1.Rows.Add("b0003", "ROLLS", "90.00", "BREAD", quantrolls.Text, itemcost(9))
+                        stckrolls.Text = stckrolls.Text - CDec(quantrolls.Text)
+                        quantrolls.Text = Nothing
+                    End If
+                End If
+            ElseIf chkfrench.Checked = True Then
+                If quantfrench.Text = String.Empty Then
+                    MessageBox.Show("Empty quantity is not valid", "Error!")
+                    quantfrench.Text = Nothing
+                ElseIf chkfrench.Checked = True And quantfrench.Text = 0 Then
+                    MessageBox.Show("Zero quantity is not valid", "Error!")
+                    quantfrench.Text = Nothing
+                Else
+                    iConfirm = MessageBox.Show("Place Order for French Bread?" & vbNewLine & vbNewLine & "French Bread" & vbTab & "Php:105.00" & vbTab & "Qty: " & quantfrench.Text & vbTab & "Total: " & itemcost(10), "Confirmation (Bread)", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                    If iConfirm = DialogResult.Yes Then
+                        chkfrench.Checked = False
+                        DataGridView1.Rows.Add("b0004", "FRENCH BREAD", "105.00", "BREAD", quantfrench.Text, itemcost(10))
+                        stckfrench.Text = stckfrench.Text - CDec(quantfrench.Text)
+                        quantfrench.Text = Nothing
+                    End If
+                End If
+            ElseIf chkbana.Checked = True Then
+                If quantbana.Text = String.Empty Then
+                    MessageBox.Show("Empty quantity is not valid", "Error!")
+                    quantbana.Text = Nothing
+                ElseIf chkbana.Checked = True And quantbana.Text = 0 Then
+                    MessageBox.Show("Zero quantity is not valid", "Error!")
+                    quantbana.Text = Nothing
+                Else
+                    iConfirm = MessageBox.Show("Place Order for Bana Bread?" & vbNewLine & vbNewLine & "Banana Bread" & vbTab & "Php:185.00" & vbTab & "Qty: " & quantbana.Text & vbTab & "Total: " & itemcost(11), "Confirmation (Bread)", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                    If iConfirm = DialogResult.Yes Then
+                        chkbana.Checked = False
+                        DataGridView1.Rows.Add("b0005", "BANANA BREAD", "185.00", "BREAD", quantbana.Text, itemcost(11))
+                        stckbana.Text = stckbana.Text - CDec(quantbana.Text)
+                        quantbana.Text = Nothing
+                    End If
+                End If
+            ElseIf chkhot.Checked = True Then
+                If quanthot.Text = String.Empty Then
+                    MessageBox.Show("Empty quantity is not valid", "Error!")
+                    quanthot.Text = Nothing
+                ElseIf chkhot.Checked = True And quanthot.Text = 0 Then
+                    MessageBox.Show("Zero quantity is not valid", "Error!")
+                    quanthot.Text = Nothing
+                Else
+                    iConfirm = MessageBox.Show("Place Order for Hotdog Bun?" & vbNewLine & vbNewLine & "Hotdog Bun" & vbTab & "Php:125.00" & vbTab & "Qty: " & quanthot.Text & vbTab & "Total: " & itemcost(12), "Confirmation (Bread)", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                    If iConfirm = DialogResult.Yes Then
+                        chkhot.Checked = False
+                        DataGridView1.Rows.Add("b0006", "HOTDOG BUN", "125.00", "BREAD", quanthot.Text, itemcost(12))
+                        stckhot.Text = stckhot.Text - CDec(quanthot.Text)
+                        quanthot.Text = Nothing
+                    End If
+                End If
+            ElseIf chkmoz.Checked = True Then
+                If quantmoz.Text = String.Empty Then
+                    MessageBox.Show("Empty quantity is not valid", "Error!")
+                    quantmoz.Text = Nothing
+                ElseIf chkmoz.Checked = True And quantmoz.Text = 0 Then
+                    MessageBox.Show("Zero quantity is not valid", "Error!")
+                    quantmoz.Text = Nothing
+                Else
+                    iConfirm = MessageBox.Show("Place Order for Mozzarella?" & vbNewLine & vbNewLine & "Mozzarella" & vbTab & "Php:450.00" & vbTab & "Qty: " & quantmoz.Text & vbTab & "Total: " & itemcost(3), "Confirmation (Pizza)", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                    If iConfirm = DialogResult.Yes Then
+                        chkmoz.Checked = False
+                        DataGridView1.Rows.Add("p0001", "MOZZARELLA", "450.00", "PIZZA", quantmoz.Text, itemcost(3))
+                        stckmoz.Text = stckmoz.Text - CDec(quantmoz.Text)
+                        quantmoz.Text = Nothing
+                    End If
+                End If
+            ElseIf chkbac.Checked = True Then
+                If quantbac.Text = String.Empty Then
+                    MessageBox.Show("Empty quantity is not valid", "Error!")
+                    quantbac.Text = Nothing
+                ElseIf chkbac.Checked = True And quantbac.Text = 0 Then
+                    MessageBox.Show("Zero quantity is not valid", "Error!")
+                    quantbac.Text = Nothing
+                Else
+                    iConfirm = MessageBox.Show("Place Order for Bacon?" & vbNewLine & vbNewLine & "Bacon" & vbTab & "Php:480.00" & vbTab & "Qty: " & quantbac.Text & vbTab & "Total: " & itemcost(4), "Confirmation (Pizza)", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                    If iConfirm = DialogResult.Yes Then
+                        chkbac.Checked = False
+                        DataGridView1.Rows.Add("p0002", "BACON", "480.00", "PIZZA", quantbac.Text, itemcost(4))
+                        stckbac.Text = stckbac.Text - CDec(quantbac.Text)
+                        quantbac.Text = Nothing
+                    End If
+                End If
+            ElseIf chkchil.Checked = True Then
+                If quantchil.Text = String.Empty Then
+                    MessageBox.Show("Empty quantity is not valid", "Error!")
+                    quantchil.Text = Nothing
+                ElseIf chkchil.Checked = True And quantchil.Text = 0 Then
+                    MessageBox.Show("Zero quantity is not valid", "Error!")
+                    quantchil.Text = Nothing
+                Else
+                    iConfirm = MessageBox.Show("Place Order for Chili Pepper?" & vbNewLine & vbNewLine & "Chili Pepper" & vbTab & "Php:400.00" & vbTab & "Qty: " & quantchil.Text & vbTab & "Total: " & itemcost(5), "Confirmation (Pizza)", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                    If iConfirm = DialogResult.Yes Then
+                        chkchil.Checked = False
+                        DataGridView1.Rows.Add("p0003", "CHILI PEPPER", "400.00", "PIZZA", quantchil.Text, itemcost(5))
+                        stckchil.Text = stckchil.Text - CDec(quantchil.Text)
+                        quantchil.Text = Nothing
+                    End If
+                End If
+            ElseIf chkmush.Checked = True Then
+                If quantmush.Text = String.Empty Then
+                    MessageBox.Show("Empty quantity is not valid", "Error!")
+                    quantmush.Text = Nothing
+                ElseIf chkmush.Checked = True And quantmush.Text = 0 Then
+                    MessageBox.Show("Zero quantity is not valid", "Error!")
+                    quantmush.Text = Nothing
+                Else
+                    iConfirm = MessageBox.Show("Place Order for Mushrooms?" & vbNewLine & vbNewLine & "Mushrooms" & vbTab & "Php:550.00" & vbTab & "Qty: " & quantmush.Text & vbTab & "Total: " & itemcost(6), "Confirmation (Pizza)", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                    If iConfirm = DialogResult.Yes Then
+                        chkmush.Checked = False
+                        DataGridView1.Rows.Add("p0004", "MUSHROOMS", "550.00", "PIZZA", quantmush.Text, itemcost(6))
+                        stckmush.Text = stckmush.Text - CDec(quantmush.Text)
+                        quantmush.Text = Nothing
+                    End If
+                End If
+            ElseIf chkveg.Checked = True Then
+                If quantveg.Text = String.Empty Then
+                    MessageBox.Show("Empty quantity is not valid", "Error!")
+                    quantveg.Text = Nothing
+                ElseIf chkveg.Checked = True And quantveg.Text = 0 Then
+                    MessageBox.Show("Zero quantity is not valid", "Error!")
+                    quantveg.Text = Nothing
+                Else
+                    iConfirm = MessageBox.Show("Place Order for Vegetarian?" & vbNewLine & vbNewLine & "Vegetarian" & vbTab & "Php:500.00" & vbTab & "Qty: " & quantveg.Text & vbTab & "Total: " & itemcost(7), "Confirmation (Pizza)", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                    If iConfirm = DialogResult.Yes Then
+                        chkveg.Checked = False
+                        DataGridView1.Rows.Add("p0005", "VEGETARIAN", "500.00", "PIZZA", quantveg.Text, itemcost(7))
+                        stckveg.Text = stckveg.Text - CDec(quantveg.Text)
+                        quantveg.Text = Nothing
+                    End If
+                End If
+            ElseIf chkver.Checked = True Then
+                If quantver.Text = String.Empty Then
+                    MessageBox.Show("Empty quantity is not valid", "Error!")
+                    quantver.Text = Nothing
+                ElseIf chkver.Checked = True And quantver.Text = 0 Then
+                    MessageBox.Show("Zero quantity is not valid", "Error!")
+                    quantver.Text = Nothing
+                Else
+                    iConfirm = MessageBox.Show("Place Order for Veronese?" & vbNewLine & vbNewLine & "Veronese " & vbTab & "Php:650.00" & vbTab & "Qty: " & quantver.Text & vbTab & "Total: " & itemcost(8), "Confirmation (Pizza)", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                    If iConfirm = DialogResult.Yes Then
+                        chkver.Checked = False
+                        DataGridView1.Rows.Add("p0006", "VERONESE", "650.00", "PIZZA", quantver.Text, itemcost(8))
+                        stckver.Text = stckver.Text - CDec(quantver.Text)
+                        quantver.Text = Nothing
+                    End If
+                End If
+            ElseIf chkespr.Checked = True Then
+                If quantespr.Text = String.Empty Then
+                    MessageBox.Show("Empty quantity is not valid", "Error!")
+                    quantespr.Text = Nothing
+                ElseIf chkespr.Checked = True And quantespr.Text = 0 Then
+                    MessageBox.Show("Zero quantity is not valid", "Error!")
+                    quantespr.Text = Nothing
+                Else
+                    iConfirm = MessageBox.Show("Place Order for Espresso?" & vbNewLine & vbNewLine & "Espresso" & vbTab & "Php:180.00" & vbTab & "Qty: " & quantespr.Text & vbTab & "Total: " & itemcost(13), "Confirmation (Coffee)", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                    If iConfirm = DialogResult.Yes Then
+                        chkespr.Checked = False
+                        DataGridView1.Rows.Add("c0001", "ESPRESSO", "180.00", "COFFEE", quantespr.Text, itemcost(13))
+                        stckespr.Text = stckespr.Text - CDec(quantespr.Text)
+                        quantespr.Text = Nothing
+                    End If
+                End If
+            ElseIf chkdop.Checked = True Then
+                If quantdop.Text = String.Empty Then
+                    MessageBox.Show("Empty quantity is not valid", "Error!")
+                    quantdop.Text = Nothing
+                ElseIf chkdop.Checked = True And quantdop.Text = 0 Then
+                    MessageBox.Show("Zero quantity is not valid", "Error!")
+                    quantdop.Text = Nothing
+                Else
+                    iConfirm = MessageBox.Show("Place Order for Doppio?" & vbNewLine & vbNewLine & "Doppio" & vbTab & "Php:198.00" & vbTab & "Qty: " & quantdop.Text & vbTab & "Total: " & itemcost(14), "Confirmation (Coffee)", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                    If iConfirm = DialogResult.Yes Then
+                        chkdop.Checked = False
+                        DataGridView1.Rows.Add("c0002", "DOPPIO", "198.00", "COFFEE", quantdop.Text, itemcost(14))
+                        stckdop.Text = stckdop.Text - CDec(quantdop.Text)
+                        quantdop.Text = Nothing
+                    End If
+                End If
+            ElseIf chkamer.Checked = True Then
+                If quantamer.Text = String.Empty Then
+                    MessageBox.Show("Empty quantity is not valid", "Error!")
+                    quantamer.Text = Nothing
+                ElseIf chkamer.Checked = True And quantamer.Text = 0 Then
+                    MessageBox.Show("Zero quantity is not valid", "Error!")
+                    quantamer.Text = Nothing
+                Else
+                    iConfirm = MessageBox.Show("Place Order for Americano?" & vbNewLine & vbNewLine & "Americano" & vbTab & "Php:175.00" & vbTab & "Qty: " & quantamer.Text & vbTab & "Total: " & itemcost(15), "Confirmation (Coffee)", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                    If iConfirm = DialogResult.Yes Then
+                        chkamer.Checked = False
+                        DataGridView1.Rows.Add("c0003", "AMERICANO", "175.00", "COFFEE", quantamer.Text, itemcost(15))
+                        stckamer.Text = stckamer.Text - CDec(quantamer.Text)
+                        quantamer.Text = Nothing
+                    End If
+                End If
+            ElseIf chkcapp.Checked = True Then
+                If quantcapp.Text = String.Empty Then
+                    MessageBox.Show("Empty quantity is not valid", "Error!")
+                    quantcapp.Text = Nothing
+                ElseIf chkcapp.Checked = True And quantcapp.Text = 0 Then
+                    MessageBox.Show("Zero quantity is not valid", "Error!")
+                    quantcapp.Text = Nothing
+                Else
+                    iConfirm = MessageBox.Show("Place Order for Cappuccino?" & vbNewLine & vbNewLine & "Cappuccino" & vbTab & "Php:220.00" & vbTab & "Qty: " & quantcapp.Text & vbTab & "Total: " & itemcost(16), "Confirmation (Coffee)", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                    If iConfirm = DialogResult.Yes Then
+                        chkcapp.Checked = False
+                        DataGridView1.Rows.Add("c0004", "CAPPUCCINO", "220.00", "COFFEE", quantcapp.Text, itemcost(16))
+                        stckcapp.Text = stckcapp.Text - CDec(quantcapp.Text)
+                        quantcapp.Text = Nothing
+                    End If
+                End If
+            ElseIf chklatt.Checked = True Then
+                If quantlatt.Text = String.Empty Then
+                    MessageBox.Show("Empty quantity is not valid", "Error!")
+                    quantlatt.Text = Nothing
+                ElseIf chklatt.Checked = True And quantlatt.Text = 0 Then
+                    MessageBox.Show("Zero quantity is not valid", "Error!")
+                    quantlatt.Text = Nothing
+                Else
+                    iConfirm = MessageBox.Show("Place Order for Latte?" & vbNewLine & vbNewLine & "Latte" & vbTab & "Php:185.00" & vbTab & "Qty: " & quantlatt.Text & vbTab & "Total: " & itemcost(17), "Confirmation (Coffee)", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                    If iConfirm = DialogResult.Yes Then
+                        chklatt.Checked = False
+                        DataGridView1.Rows.Add("c0005", "LATTE", "185.00", "COFFEE", quantlatt.Text, itemcost(17))
+                        stcklatt.Text = stcklatt.Text - CDec(quantlatt.Text)
+                        quantlatt.Text = Nothing
+                    End If
+                End If
+            ElseIf chkmacch.Checked = True Then
+                If quantmacch.Text = String.Empty Then
+                    MessageBox.Show("Empty quantity is not valid", "Error!")
+                    quantmacch.Text = Nothing
+                ElseIf chkmacch.Checked = True And quantmacch.Text = 0 Then
+                    MessageBox.Show("Zero quantity is not valid", "Error!")
+                    quantmacch.Text = Nothing
+                Else
+                    iConfirm = MessageBox.Show("Place Order for Macchiato?" & vbNewLine & vbNewLine & "Macchiato" & vbTab & "Php:250.00" & vbTab & "Qty: " & quantmacch.Text & vbTab & "Total: " & itemcost(18), "Confirmation (Coffee)", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                    If iConfirm = DialogResult.Yes Then
+                        chkmacch.Checked = False
+                        DataGridView1.Rows.Add("c0006", "MACCHIATO", "250.00", "COFFEE", quantmacch.Text, itemcost(18))
+                        stckmacch.Text = stckmacch.Text - CDec(quantmacch.Text)
+                        quantmacch.Text = Nothing
+                    End If
+                End If
+            ElseIf chkloc.Checked = True Then
+                If quantloc.Text = String.Empty Then
+                    MessageBox.Show("Empty quantity is not valid", "Error!")
+                    quantloc.Text = Nothing
+                ElseIf chkloc.Checked = True And quantloc.Text = 0 Then
+                    MessageBox.Show("Zero quantity is not valid", "Error!")
+                    quantloc.Text = Nothing
+                Else
+                    iConfirm = MessageBox.Show("Place Order for Local Cafe?" & vbNewLine & vbNewLine & "Local Cafe" & vbTab & "Php:80.00" & vbTab & "Qty: " & quantloc.Text & vbTab & "Total: " & itemcost(19), "Confirmation (Coffee)", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                    If iConfirm = DialogResult.Yes Then
+                        chkloc.Checked = False
+                        DataGridView1.Rows.Add("c0007", "LOCAL CAFE", "80.00", "COFFEE", quantloc.Text, itemcost(19))
+                        stckloc.Text = stckloc.Text - CDec(quantloc.Text)
+                        quantloc.Text = Nothing
+                    End If
+                End If
+
+            ElseIf chkcomb1.Checked = True Then
+                If quantcomb1.Text = String.Empty Then
+                    MessageBox.Show("Empty quantity is not valid", "Error!")
+                    quantcomb1.Text = Nothing
+                ElseIf chkcomb1.Checked = True And quantcomb1.Text = 0 Then
+                    MessageBox.Show("Zero quantity is not valid", "Error!")
+                    quantcomb1.Text = Nothing
+                Else
+                    iConfirm = MessageBox.Show("Place Order for Combo1 (ChiliPepper x Bacon)?" & vbNewLine & vbNewLine & "Combo1" & vbTab & "Php:849.00" & vbTab & "Qty: " & quantcomb1.Text & vbTab & "Total: " & itemcost(20), "Confirmation (Coffee)", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                    If iConfirm = DialogResult.Yes Then
+                        chkcomb1.Checked = False
+                        DataGridView1.Rows.Add("combo1", "CHILIPEPPER X BACON", "849.00", "COMBO", quantcomb1.Text, itemcost(20))
+                        stckchil.Text = stckchil.Text - CDec(quantcomb1.Text)
+                        stckbac.Text = stckbac.Text - CDec(quantcomb1.Text)
+                        chkcomb1.Checked = False
+                        quantcomb1.Text = Nothing
+                    End If
+                End If
+
+            ElseIf chkcomb2.Checked = True Then
+                If quantcomb2.Text = String.Empty Then
+                    MessageBox.Show("Empty quantity is not valid", "Error!")
+                    quantcomb2.Text = Nothing
+                ElseIf chkcomb2.Checked = True And quantcomb2.Text = 0 Then
+                    MessageBox.Show("Zero quantity is not valid", "Error!")
+                    quantcomb2.Text = Nothing
+                Else
+                    iConfirm = MessageBox.Show("Place Order for Combo2 (Mushrooms x Veronese)?" & vbNewLine & vbNewLine & "Combo2" & vbTab & "Php:999.00" & vbTab & "Qty: " & quantcomb2.Text & vbTab & "Total: " & itemcost(21), "Confirmation (Coffee)", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                    If iConfirm = DialogResult.Yes Then
+                        chkcomb2.Checked = False
+                        DataGridView1.Rows.Add("combo2", "MUSHROOMS X VERONESE", "999.00", "COMBO", quantcomb2.Text, itemcost(21))
+                        stckchil.Text = stckchil.Text - CDec(quantcomb2.Text)
+                        stckbac.Text = stckbac.Text - CDec(quantcomb2.Text)
+                        chkcomb2.Checked = False
+                        quantcomb2.Text = Nothing
+                    End If
+                End If
+            ElseIf chkcomb3.Checked = True Then
+                If quantcomb3.Text = String.Empty Then
+                    MessageBox.Show("Empty quantity is not valid", "Error!")
+                    quantcomb3.Text = Nothing
+                ElseIf chkcomb3.Checked = True And quantcomb3.Text = 0 Then
+                    MessageBox.Show("Zero quantity is not valid", "Error!")
+                    quantcomb3.Text = Nothing
+                Else
+                    iConfirm = MessageBox.Show("Place Order for Combo3 (Vegetarian x ChiliPepper)?" & vbNewLine & vbNewLine & "Combo3" & vbTab & "Php:799.00" & vbTab & "Qty: " & quantcomb3.Text & vbTab & "Total: " & itemcost(22), "Confirmation (Coffee)", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                    If iConfirm = DialogResult.Yes Then
+                        chkcomb3.Checked = False
+                        DataGridView1.Rows.Add("combo3", "VEGETARIAN X CHILIPEPPER", "849.00", "COMBO", quantcomb3.Text, itemcost(22))
+                        stckchil.Text = stckchil.Text - CDec(quantcomb3.Text)
+                        stckbac.Text = stckbac.Text - CDec(quantcomb3.Text)
+                        chkcomb3.Checked = False
+                        quantcomb3.Text = Nothing
+                    End If
+                End If
+            End If
+
+
+
+
+        End If
+
+    End Sub
+    Private Sub NumbersOnly(ByVal e As System.Windows.Forms.KeyPressEventArgs)
+        If (Asc(e.KeyChar) >= 48 And Asc(e.KeyChar) <= 57 Or Asc(e.KeyChar) = 8 Or Asc(e.KeyChar) = 13) Then
+        Else
+            e.Handled = True
+            MessageBox.Show("Please enter Quantity (Numbers)", "ERROR!")
+        End If
+    End Sub
+    Private Sub Timer1_Tick(ByVal sender As Object, ByVal e As EventArgs) Handles Timer1.Tick
+       
+        timeanddate.Text = Date.Now.ToString("MMMM dd yyyy")
+        time.Text = Date.Now.ToString("hh:mm:ss")
+
+    End Sub
+    Private Sub btnpizza_Click(ByVal sender As Object, ByVal e As EventArgs) Handles btnpizza.Click
+        pnlcoffee.Visible = False
+        pnlbread.Visible = True
+        pnlpizza.Visible = False
+        pnllist.Visible = False
+        markpiz.Visible = True
+        markbread.Visible = False
+        marklist.Visible = False
+        markcoffee.Visible = False
+        panelvoid.Visible = False
+        markcombo.Visible = False
+        pnlcombo.Visible = False
+        panelhome.Visible = False
+    End Sub
+
+    Private Sub btnbread_Click(ByVal sender As Object, ByVal e As EventArgs) Handles btnbread.Click
+        pnlcoffee.Visible = False
+        pnlbread.Visible = False
+        pnlpizza.Visible = True
+        pnllist.Visible = False
+        markpiz.Visible = False
+        markbread.Visible = True
+        marklist.Visible = False
+        markcoffee.Visible = False
+        panelvoid.Visible = False
+        panelhome.Visible = False
+        markcombo.Visible = False
+        pnlcombo.Visible = False
+    End Sub
+
+    Private Sub btncoffee_Click(ByVal sender As Object, ByVal e As EventArgs) Handles btncoffee.Click
+        pnlcoffee.Visible = True
+        pnlbread.Visible = False
+        pnlpizza.Visible = False
+        pnllist.Visible = False
+        markpiz.Visible = False
+        markbread.Visible = False
+        marklist.Visible = False
+        markcoffee.Visible = True
+        panelvoid.Visible = False
+        panelhome.Visible = False
+        markcombo.Visible = False
+        pnlcombo.Visible = False
+    End Sub
+    Private Sub btncombo_Click(ByVal sender As Object, ByVal e As EventArgs) Handles btncombo.Click
+        pnlcoffee.Visible = False
+        pnlbread.Visible = False
+        pnlpizza.Visible = False
+        pnllist.Visible = False
+        markpiz.Visible = False
+        markbread.Visible = False
+        marklist.Visible = False
+        markcoffee.Visible = False
+        panelvoid.Visible = False
+        panelhome.Visible = False
+        markcombo.Visible = True
+        pnlcombo.Visible = True
+    End Sub
+
+    Private Sub btncheck_Click(ByVal sender As Object, ByVal e As EventArgs) Handles btncheck.Click
+        pnlcoffee.Visible = False
+        pnlbread.Visible = False
+        pnlpizza.Visible = False
+        pnllist.Visible = True
+        markpiz.Visible = False
+        markbread.Visible = False
+        marklist.Visible = True
+        markcoffee.Visible = False
+        panelvoid.Visible = False
+        panelhome.Visible = False
+
+        markcombo.Visible = False
+        pnlcombo.Visible = False
+        txtamounttendered.Focus()
+
+        If DataGridView1.RowCount > 0 Then
+            Dim iTotal As Integer = 0
+
+            For index As Integer = 0 To DataGridView1.RowCount - 1
+                iTotal += Convert.ToInt32(DataGridView1.Rows(index).Cells(5).Value)
+            Next
+            ttlprice = iTotal
+            txtvat.Text = "Php: " & iTotal * 0.12
+            txtdiscount.Text = "0%"
+            txtsubtotal.Text = "Php: " & iTotal - (iTotal * 0.12)
+            txtpayable.Text = iTotal
+        End If
+    End Sub
+
+
+    Private Sub chkwhite_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkwhite.CheckedChanged, chkwheat.CheckedChanged, chkrolls.CheckedChanged, chkhot.CheckedChanged, chkfrench.CheckedChanged, chkbana.CheckedChanged,
+        chkmoz.CheckedChanged, chkbac.CheckedChanged, chkamer.CheckedChanged, chkcapp.CheckedChanged, chkchil.CheckedChanged, chkdop.CheckedChanged, chkespr.CheckedChanged, chklatt.CheckedChanged,
+        chkloc.CheckedChanged, chkmacch.CheckedChanged, chkmush.CheckedChanged, chkveg.CheckedChanged, chkver.CheckedChanged, chkcomb1.CheckedChanged, chkcomb2.CheckedChanged, chkcomb3.CheckedChanged
+        If chkwhite.Checked Then
+            quantwhite.Enabled = True
+            quantwhite.Focus()
+        Else : quantwhite.Enabled = False
+        End If
+        If chkcomb1.Checked Then
+            quantcomb1.Enabled = True
+            quantcomb1.Focus()
+        Else : quantcomb1.Enabled = False
+        End If
+        If chkcomb2.Checked Then
+            quantcomb2.Enabled = True
+            quantcomb2.Focus()
+        Else : quantcomb2.Enabled = False
+        End If
+        If chkcomb3.Checked Then
+            quantcomb3.Enabled = True
+            quantcomb3.Focus()
+        Else : quantcomb3.Enabled = False
+        End If
+        If chkwheat.Checked Then
+            quantwheat.Enabled = True
+            quantwheat.Focus()
+        Else : quantwheat.Enabled = False
+        End If
+        If chkrolls.Checked Then
+            quantrolls.Enabled = True
+            quantrolls.Focus()
+        Else : quantrolls.Enabled = False
+        End If
+        If chkhot.Checked Then
+            quanthot.Enabled = True
+            quanthot.Focus()
+        Else : quanthot.Enabled = False
+        End If
+        If chkfrench.Checked Then
+            quantfrench.Enabled = True
+            quantfrench.Focus()
+        Else : quantfrench.Enabled = False
+        End If
+        If chkbana.Checked Then
+            quantbana.Enabled = True
+            quantbana.Focus()
+        Else : quantbana.Enabled = False
+        End If
+        If chkmoz.Checked Then
+            quantmoz.Enabled = True
+            quantmoz.Focus()
+        Else : quantmoz.Enabled = False
+        End If
+        If chkbac.Checked Then
+            quantbac.Enabled = True
+            quantbac.Focus()
+        Else : quantbac.Enabled = False
+        End If
+        If chkamer.Checked Then
+            quantamer.Enabled = True
+            quantamer.Focus()
+        Else : quantamer.Enabled = False
+        End If
+        If chkcapp.Checked Then
+            quantcapp.Enabled = True
+            quantcapp.Focus()
+        Else : quantcapp.Enabled = False
+        End If
+        If chkchil.Checked Then
+            quantchil.Enabled = True
+            quantchil.Focus()
+        Else : quantchil.Enabled = False
+        End If
+        If chkdop.Checked Then
+            quantdop.Enabled = True
+            quantdop.Focus()
+        Else : quantdop.Enabled = False
+        End If
+        If chkespr.Checked Then
+            quantespr.Enabled = True
+            quantespr.Focus()
+        Else : quantespr.Enabled = False
+        End If
+        If chklatt.Checked Then
+            quantlatt.Enabled = True
+            quantlatt.Focus()
+        Else : quantlatt.Enabled = False
+        End If
+        If chkloc.Checked Then
+            quantloc.Enabled = True
+            quantloc.Focus()
+        Else : quantloc.Enabled = False
+        End If
+        If chkmacch.Checked Then
+            quantmacch.Enabled = True
+            quantmacch.Focus()
+        Else : quantmacch.Enabled = False
+        End If
+        If chkmush.Checked Then
+            quantmush.Enabled = True
+            quantmush.Focus()
+        Else : quantmush.Enabled = False
+        End If
+        If chkveg.Checked Then
+            quantveg.Enabled = True
+            quantveg.Focus()
+        Else : quantveg.Enabled = False
+        End If
+        If chkver.Checked Then
+            quantver.Enabled = True
+            quantver.Focus()
+        Else : quantver.Enabled = False
+        End If
+
+
+    End Sub
+    Private Sub quantcomb1_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles quantcomb1.TextChanged
+        If quantcomb1.Text <> "" Then
+            Dim quant = CDec(quantcomb1.Text)
+            If quant > stckbac.Text Or quant > stckchil.Text Then
+                MessageBox.Show("Not enough stock", "Error!")
+                quantcomb1.Text = ""
+            End If
+            itemcost(20) = (quant * 849)
+        Else
+            quantcomb1.Text = ""
+        End If
+        If stckbac.Text < 10 And stckbac.Text > 5 Then
+            stckbac.ForeColor = Color.DarkOrange
+        ElseIf stckbac.Text > 0 And stckbac.Text < 6 Then
+            stckbac.ForeColor = Color.Red
+        ElseIf stckbac.Text <= 0 Then
+            chkbac.Text = "OUT OF STOCK"
+            chkbac.Enabled = False
+            stckbac.ForeColor = Color.Red
+        Else
+            stckbac.ForeColor = Color.Lime
+        End If
+        If stckchil.Text < 10 And stckchil.Text > 5 Then
+            stckchil.ForeColor = Color.DarkOrange
+        ElseIf stckchil.Text > 0 And stckchil.Text < 6 Then
+            stckchil.ForeColor = Color.Red
+        ElseIf stckchil.Text <= 0 Then
+            chkchil.Text = "OUT OF STOCK"
+            chkchil.Enabled = False
+            stckchil.ForeColor = Color.Red
+        Else
+            stckchil.ForeColor = Color.Lime
+        End If
+    End Sub
+    Private Sub quantcomb2_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles quantcomb2.TextChanged
+        If quantcomb2.Text <> "" Then
+            Dim quant = CDec(quantcomb2.Text)
+            If quant > stckver.Text Or quant > stckmush.Text Then
+                MessageBox.Show("Not enough stock", "Error!")
+                quantcomb2.Text = ""
+            End If
+            itemcost(21) = (quant * 849)
+        Else
+            quantcomb2.Text = ""
+        End If
+        If stckver.Text < 10 And stckver.Text > 5 Then
+            stckver.ForeColor = Color.DarkOrange
+        ElseIf stckbac.Text > 0 And stckver.Text < 6 Then
+            stckver.ForeColor = Color.Red
+        ElseIf stckver.Text <= 0 Then
+            chkver.Text = "OUT OF STOCK"
+            chkver.Enabled = False
+            stckver.ForeColor = Color.Red
+        Else
+            stckver.ForeColor = Color.Lime
+        End If
+        If stckmush.Text < 10 And stckmush.Text > 5 Then
+            stckmush.ForeColor = Color.DarkOrange
+        ElseIf stckchil.Text > 0 And stckchil.Text < 6 Then
+            stckmush.ForeColor = Color.Red
+        ElseIf stckmush.Text <= 0 Then
+            chkmush.Text = "OUT OF STOCK"
+            chkmush.Enabled = False
+            stckmush.ForeColor = Color.Red
+        Else
+            stckmush.ForeColor = Color.Lime
+        End If
+    End Sub
+    Private Sub quantcomb3_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles quantcomb3.TextChanged
+        If quantcomb3.Text <> "" Then
+            Dim quant = CDec(quantcomb3.Text)
+            If quant > stckveg.Text Or quant > stckchil.Text Then
+                MessageBox.Show("Not enough stock", "Error!")
+                quantcomb3.Text = ""
+            End If
+            itemcost(22) = (quant * 849)
+        Else
+            quantcomb3.Text = ""
+        End If
+        If stckveg.Text < 10 And stckveg.Text > 5 Then
+            stckveg.ForeColor = Color.DarkOrange
+        ElseIf stckveg.Text > 0 And stckveg.Text < 6 Then
+            stckveg.ForeColor = Color.Red
+        ElseIf stckveg.Text <= 0 Then
+            chkveg.Text = "OUT OF STOCK"
+            chkveg.Enabled = False
+            stckveg.ForeColor = Color.Red
+        Else
+            stckveg.ForeColor = Color.Lime
+        End If
+        If stckchil.Text < 10 And stckchil.Text > 5 Then
+            stckchil.ForeColor = Color.DarkOrange
+        ElseIf stckchil.Text > 0 And stckchil.Text < 6 Then
+            stckchil.ForeColor = Color.Red
+        ElseIf stckchil.Text <= 0 Then
+            chkchil.Text = "OUT OF STOCK"
+            chkchil.Enabled = False
+            stckchil.ForeColor = Color.Red
+        Else
+            stckchil.ForeColor = Color.Lime
+        End If
+    End Sub
+
+
+    Private Sub white_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles quantwhite.TextChanged
+        If quantwhite.Text <> "" Then
+            Dim quant = CDec(quantwhite.Text)
+            If quant > stckwhite.Text Then
+                MessageBox.Show("Not enough stock", "Error!")
+                quantwhite.Text = ""
+            End If
+            itemcost(0) = (quant * 450)
+        Else
+            quantwhite.Text = ""
+        End If
+        If stckwhite.Text < 10 And stckwhite.Text > 5 Then
+            stckwhite.ForeColor = Color.DarkOrange
+        ElseIf stckwhite.Text > 0 And stckwhite.Text < 6 Then
+            stckwhite.ForeColor = Color.Red
+        ElseIf stckwhite.Text <= 0 Then
+            chkwhite.Text = "OUT OF STOCK"
+            chkwhite.Enabled = False
+            stckwhite.ForeColor = Color.Red
+        Else
+            stckwhite.ForeColor = Color.Lime
+        End If
+    End Sub
+    Private Sub hot_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles quanthot.TextChanged
+        If quanthot.Text <> "" Then
+            Dim quant = CDec(quanthot.Text)
+            If quant > stckhot.Text Then
+                MessageBox.Show("Not enough stock", "Error!")
+                quanthot.Text = ""
+            End If
+            itemcost(12) = (quant * 125)
+        Else
+            quanthot.Text = ""
+        End If
+        If stckhot.Text < 10 And stckhot.Text > 5 Then
+            stckhot.ForeColor = Color.DarkOrange
+        ElseIf stckhot.Text > 0 And stckhot.Text < 6 Then
+            stckhot.ForeColor = Color.Red
+        ElseIf stckhot.Text <= 0 Then
+            chkhot.Text = "OUT OF STOCK"
+            chkhot.Enabled = False
+            stckhot.ForeColor = Color.Red
+        Else
+            stckhot.ForeColor = Color.Lime
+        End If
+    End Sub
+    Private Sub quantespr_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles quantespr.TextChanged
+        If quantespr.Text <> "" Then
+            Dim quant = CDec(quantespr.Text)
+            If quant > stckespr.Text Then
+                MessageBox.Show("Not enough stock", "Error!")
+                quantespr.Text = ""
+            End If
+            itemcost(13) = (quant * 180)
+        Else
+            quantespr.Text = ""
+        End If
+        If stckespr.Text < 10 And stckespr.Text > 5 Then
+            stckespr.ForeColor = Color.DarkOrange
+        ElseIf stckespr.Text > 0 And stckespr.Text < 6 Then
+            stckespr.ForeColor = Color.Red
+        ElseIf stckespr.Text <= 0 Then
+            chkespr.Text = "OUT OF STOCK"
+            chkespr.Enabled = False
+            stckespr.ForeColor = Color.Red
+        Else
+            stckespr.ForeColor = Color.Lime
+        End If
+    End Sub
+    Private Sub quantlatt_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles quantlatt.TextChanged
+        If quantlatt.Text <> "" Then
+            Dim quant = CDec(quantlatt.Text)
+            If quant > stcklatt.Text Then
+                MessageBox.Show("Not enough stock", "Error!")
+                quantlatt.Text = ""
+            End If
+            itemcost(17) = (quant * 185)
+        Else
+            quantlatt.Text = ""
+        End If
+        If stcklatt.Text < 10 And stcklatt.Text > 5 Then
+            stcklatt.ForeColor = Color.DarkOrange
+        ElseIf stcklatt.Text > 0 And stcklatt.Text < 6 Then
+            stcklatt.ForeColor = Color.Red
+        ElseIf stcklatt.Text <= 0 Then
+            chklatt.Text = "OUT OF STOCK"
+            chklatt.Enabled = False
+            stcklatt.ForeColor = Color.Red
+        Else
+            stcklatt.ForeColor = Color.Lime
+        End If
+    End Sub
+    Private Sub quantcapp_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles quantcapp.TextChanged
+        If quantcapp.Text <> "" Then
+            Dim quant = CDec(quantcapp.Text)
+            If quant > stckcapp.Text Then
+                MessageBox.Show("Not enough stock", "Error!")
+                quantcapp.Text = ""
+            End If
+            itemcost(16) = (quant * 220)
+        Else
+            quantcapp.Text = ""
+        End If
+        If stckcapp.Text < 10 And stckcapp.Text > 5 Then
+            stckcapp.ForeColor = Color.DarkOrange
+        ElseIf stckcapp.Text > 0 And stckcapp.Text < 6 Then
+            stckcapp.ForeColor = Color.Red
+        ElseIf stckcapp.Text <= 0 Then
+            chkcapp.Text = "OUT OF STOCK"
+            chkcapp.Enabled = False
+            stckcapp.ForeColor = Color.Red
+        Else
+            stckcapp.ForeColor = Color.Lime
+        End If
+    End Sub
+    Private Sub quantchil_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles quantchil.TextChanged
+        If quantchil.Text <> "" Then
+            Dim quant = CDec(quantchil.Text)
+            If quant > stckchil.Text Then
+                MessageBox.Show("Not enough stock", "Error!")
+                quantchil.Text = ""
+            End If
+            itemcost(5) = (quant * 400)
+        Else
+            quantchil.Text = ""
+        End If
+        If stckchil.Text < 10 And stckchil.Text > 5 Then
+            stckchil.ForeColor = Color.DarkOrange
+        ElseIf stckchil.Text > 0 And stckchil.Text < 6 Then
+            stckchil.ForeColor = Color.Red
+        ElseIf stckchil.Text <= 0 Then
+            chkchil.Text = "OUT OF STOCK"
+            chkchil.Enabled = False
+            stckchil.ForeColor = Color.Red
+        Else
+            stckchil.ForeColor = Color.Lime
+        End If
+    End Sub
+    Private Sub quantveg_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles quantveg.TextChanged
+        If quantveg.Text <> "" Then
+            Dim quant = CDec(quantveg.Text)
+            If quant > stckveg.Text Then
+                MessageBox.Show("Not enough stock", "Error!")
+                quantveg.Text = ""
+            End If
+            itemcost(7) = (quant * 500)
+        Else
+            quantveg.Text = ""
+        End If
+        If stckveg.Text < 10 And stckveg.Text > 5 Then
+            stckveg.ForeColor = Color.DarkOrange
+        ElseIf stckveg.Text > 0 And stckveg.Text < 6 Then
+            stckveg.ForeColor = Color.Red
+        ElseIf stckveg.Text <= 0 Then
+            chkveg.Text = "OUT OF STOCK"
+            chkveg.Enabled = False
+            stckveg.ForeColor = Color.Red
+        Else
+            stckveg.ForeColor = Color.Lime
+        End If
+    End Sub
+    Private Sub quantdop_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles quantdop.TextChanged
+        If quantdop.Text <> "" Then
+            Dim quant = CDec(quantdop.Text)
+            If quant > stckdop.Text Then
+                MessageBox.Show("Not enough stock", "Error!")
+                quantdop.Text = ""
+            End If
+            itemcost(14) = (quant * 198)
+        Else
+            quantdop.Text = ""
+        End If
+        If stckdop.Text < 10 And stckdop.Text > 5 Then
+            stckdop.ForeColor = Color.DarkOrange
+        ElseIf stckdop.Text > 0 And stckdop.Text < 6 Then
+            stckdop.ForeColor = Color.Red
+        ElseIf stckdop.Text <= 0 Then
+            chkdop.Text = "OUT OF STOCK"
+            chkdop.Enabled = False
+            stckdop.ForeColor = Color.Red
+        Else
+            stckdop.ForeColor = Color.Lime
+        End If
+    End Sub
+    Private Sub quantwheat_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles quantwheat.TextChanged
+        If quantwheat.Text <> "" Then
+            Dim quant = CDec(quantwheat.Text)
+            If quant > stckwheat.Text Then
+                MessageBox.Show("Not enough stock", "Error!")
+                quantwheat.Text = ""
+            End If
+            itemcost(2) = (quant * 130)
+        Else
+            quantwheat.Text = ""
+        End If
+        If stckwheat.Text < 10 And stckwheat.Text > 5 Then
+            stckwheat.ForeColor = Color.DarkOrange
+        ElseIf stckwheat.Text > 0 And stckwheat.Text < 6 Then
+            stckwheat.ForeColor = Color.Red
+        ElseIf stckwheat.Text <= 0 Then
+            chkwheat.Text = "OUT OF STOCK"
+            chkwheat.Enabled = False
+            stckwheat.ForeColor = Color.Red
+        Else
+            stckwheat.ForeColor = Color.Lime
+        End If
+    End Sub
+    Private Sub quantbac_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles quantbac.TextChanged
+        If quantbac.Text <> "" Then
+            Dim quant = CDec(quantbac.Text)
+            If quant > stckbac.Text Then
+                MessageBox.Show("Not enough stock", "Error!")
+                quantbac.Text = ""
+            End If
+            itemcost(4) = (quant * 480)
+        Else
+            quantbac.Text = ""
+        End If
+        If stckbac.Text < 10 And stckbac.Text > 5 Then
+            stckbac.ForeColor = Color.DarkOrange
+        ElseIf stckbac.Text > 0 And stckbac.Text < 6 Then
+            stckbac.ForeColor = Color.Red
+        ElseIf stckbac.Text <= 0 Then
+            chkbac.Text = "OUT OF STOCK"
+            chkbac.Enabled = False
+            stckbac.ForeColor = Color.Red
+        Else
+            stckbac.ForeColor = Color.Lime
+        End If
+    End Sub
+    Private Sub quantver_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles quantver.TextChanged
+        If quantver.Text <> "" Then
+            Dim quant = CDec(quantver.Text)
+            If quant > stckver.Text Then
+                MessageBox.Show("Not enough stock", "Error!")
+                quantver.Text = ""
+            End If
+            itemcost(8) = (quant * 650)
+        Else
+            quantver.Text = ""
+        End If
+        If stckver.Text < 10 And stckver.Text > 5 Then
+            stckver.ForeColor = Color.DarkOrange
+        ElseIf stckver.Text > 0 And stckver.Text < 6 Then
+            stckver.ForeColor = Color.Red
+        ElseIf stckver.Text <= 0 Then
+            chkver.Text = "OUT OF STOCK"
+            chkver.Enabled = False
+            stckver.ForeColor = Color.Red
+        Else
+            stckver.ForeColor = Color.Lime
+        End If
+    End Sub
+    Private Sub quant_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles quantloc.TextChanged
+        If quantloc.Text <> "" Then
+            Dim quant = CDec(quantloc.Text)
+            If quant > stckloc.Text Then
+                MessageBox.Show("Not enough stock", "Error!")
+                quantloc.Text = ""
+            End If
+            itemcost(19) = (quant * 80)
+        Else
+            quantloc.Text = ""
+        End If
+        If stckloc.Text < 10 And stckloc.Text > 5 Then
+            stckloc.ForeColor = Color.DarkOrange
+        ElseIf stckloc.Text > 0 And stckloc.Text < 6 Then
+            stckloc.ForeColor = Color.Red
+        ElseIf stckloc.Text <= 0 Then
+            chkloc.Text = "OUT OF STOCK"
+            chkloc.Enabled = False
+            stckloc.ForeColor = Color.Red
+        Else
+            stckloc.ForeColor = Color.Lime
+        End If
+    End Sub
+    Private Sub quantmacch_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles quantmacch.TextChanged
+        If quantmacch.Text <> "" Then
+            Dim quant = CDec(quantmacch.Text)
+            If quant > stckmacch.Text Then
+                MessageBox.Show("Not enough stock", "Error!")
+                quantmacch.Text = ""
+            End If
+            itemcost(18) = (quant * 250)
+        Else
+            quantmacch.Text = ""
+        End If
+        If stckmacch.Text < 10 And stckmacch.Text > 5 Then
+            stckmacch.ForeColor = Color.DarkOrange
+        ElseIf stckmacch.Text > 0 And stckmacch.Text < 6 Then
+            stckmacch.ForeColor = Color.Red
+        ElseIf stckmacch.Text <= 0 Then
+            chkmacch.Text = "OUT OF STOCK"
+            chkmacch.Enabled = False
+            stckmacch.ForeColor = Color.Red
+        Else
+            stckmacch.ForeColor = Color.Lime
+        End If
+    End Sub
+    Private Sub quantfrench_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles quantfrench.TextChanged
+        If quantfrench.Text <> "" Then
+            Dim quant = CDec(quantfrench.Text)
+            If quant > stckfrench.Text Then
+                MessageBox.Show("Not enough stock", "Error!")
+                quantfrench.Text = ""
+            End If
+            itemcost(10) = (quant * 105)
+        Else
+            quantfrench.Text = ""
+        End If
+        If stckfrench.Text < 10 And stckfrench.Text > 5 Then
+            stckfrench.ForeColor = Color.DarkOrange
+        ElseIf stckfrench.Text > 0 And stckfrench.Text < 6 Then
+            stckfrench.ForeColor = Color.Red
+        ElseIf stckfrench.Text <= 0 Then
+            chkfrench.Text = "OUT OF STOCK"
+            chkfrench.Enabled = False
+            stckfrench.ForeColor = Color.Red
+        Else
+            stckfrench.ForeColor = Color.Lime
+        End If
+    End Sub
+    Private Sub quantwhite_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles quantwhite.TextChanged
+        If quantwhite.Text <> "" Then
+            Dim quant = CDec(quantwhite.Text)
+            If quant > stckwhite.Text Then
+                MessageBox.Show("Not enough stock", "Error!")
+                quantwhite.Text = ""
+            End If
+            itemcost(1) = (quant * 150)
+        Else
+            quantwhite.Text = ""
+        End If
+        If stckwhite.Text < 10 And stckwhite.Text > 5 Then
+            stckwhite.ForeColor = Color.DarkOrange
+        ElseIf stckwhite.Text > 0 And stckwhite.Text < 6 Then
+            stckwhite.ForeColor = Color.Red
+        ElseIf stckwhite.Text <= 0 Then
+            chkwhite.Text = "OUT OF STOCK"
+            chkwhite.Enabled = False
+            stckwhite.ForeColor = Color.Red
+        Else
+            stckwhite.ForeColor = Color.Lime
+        End If
+    End Sub
+    Private Sub quantbana_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles quantbana.TextChanged
+        If quantbana.Text <> "" Then
+            Dim quant = CDec(quantbana.Text)
+            If quant > stckbana.Text Then
+                MessageBox.Show("Not enough stock", "Error!")
+                quantbana.Text = ""
+            End If
+            itemcost(11) = (quant * 185)
+        Else
+            quantbana.Text = ""
+        End If
+        If stckbana.Text < 10 And stckbana.Text > 5 Then
+            stckbana.ForeColor = Color.DarkOrange
+        ElseIf stckbana.Text > 0 And stckbana.Text < 6 Then
+            stckbana.ForeColor = Color.Red
+        ElseIf stckbana.Text <= 0 Then
+            chkbana.Text = "OUT OF STOCK"
+            chkbana.Enabled = False
+            stckbana.ForeColor = Color.Red
+        Else
+            stckbana.ForeColor = Color.Lime
+        End If
+    End Sub
+    Private Sub quantamer_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles quantamer.TextChanged
+        If quantamer.Text <> "" Then
+            Dim quant = CDec(quantamer.Text)
+            If quant > stckamer.Text Then
+                MessageBox.Show("Not enough stock", "Error!")
+                quantamer.Text = ""
+            End If
+            itemcost(15) = (quant * 175)
+        Else
+            quantamer.Text = ""
+        End If
+        If stckamer.Text < 10 And stckamer.Text > 5 Then
+            stckamer.ForeColor = Color.DarkOrange
+        ElseIf stckamer.Text > 0 And stckamer.Text < 6 Then
+            stckamer.ForeColor = Color.Red
+        ElseIf stckamer.Text <= 0 Then
+            chkamer.Text = "OUT OF STOCK"
+            chkamer.Enabled = False
+            stckamer.ForeColor = Color.Red
+        Else
+            stckamer.ForeColor = Color.Lime
+        End If
+    End Sub
+    Private Sub quantrolls_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles quantrolls.TextChanged
+        If quantrolls.Text <> "" Then
+            Dim quant = CDec(quantrolls.Text)
+            If quant > stckrolls.Text Then
+                MessageBox.Show("Not enough stock", "Error!")
+                quantrolls.Text = ""
+            End If
+            itemcost(9) = (quant * 90)
+        Else
+            quantrolls.Text = ""
+        End If
+        If stckrolls.Text < 10 And stckrolls.Text > 5 Then
+            stckrolls.ForeColor = Color.DarkOrange
+        ElseIf stckrolls.Text > 0 And stckrolls.Text < 6 Then
+            stckrolls.ForeColor = Color.Red
+        ElseIf stckrolls.Text <= 0 Then
+            chkrolls.Text = "OUT OF STOCK"
+            chkrolls.Enabled = False
+            stckrolls.ForeColor = Color.Red
+        Else
+            stckrolls.ForeColor = Color.Lime
+        End If
+    End Sub
+    Private Sub quanthot_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles quanthot.TextChanged
+        If quanthot.Text <> "" Then
+            Dim quant = CDec(quanthot.Text)
+            If quant > stckhot.Text Then
+                MessageBox.Show("Not enough stock", "Error!")
+                quanthot.Text = ""
+            End If
+            itemcost(12) = (quant * 125)
+        Else
+            quanthot.Text = ""
+        End If
+        If stckhot.Text < 10 And stckhot.Text > 5 Then
+            stckhot.ForeColor = Color.DarkOrange
+        ElseIf stckhot.Text > 0 And stckhot.Text < 6 Then
+            stckhot.ForeColor = Color.Red
+        ElseIf stckhot.Text <= 0 Then
+            chkhot.Text = "OUT OF STOCK"
+            chkhot.Enabled = False
+            stckhot.ForeColor = Color.Red
+        Else
+            stckhot.ForeColor = Color.Lime
+        End If
+    End Sub
+    Private Sub quantmoz_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles quantmoz.TextChanged
+        If quantmoz.Text <> "" Then
+            Dim quant = CDec(quantmoz.Text)
+            If quant > stckmoz.Text Then
+                MessageBox.Show("Not enough stock", "Error!")
+                quantmoz.Text = ""
+            End If
+            itemcost(3) = (quant * 450)
+        Else
+            quantmoz.Text = ""
+        End If
+        If stckmoz.Text < 10 And stckmoz.Text > 5 Then
+            stckmoz.ForeColor = Color.DarkOrange
+        ElseIf stckmoz.Text > 0 And stckmoz.Text < 6 Then
+            stckmoz.ForeColor = Color.Red
+        ElseIf stckmoz.Text <= 0 Then
+            chkmoz.Text = "OUT OF STOCK"
+            chkmoz.Enabled = False
+            stckmoz.ForeColor = Color.Red
+        Else
+            stckmoz.ForeColor = Color.Lime
+        End If
+    End Sub
+    Private Sub quantmush_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles quantmush.TextChanged
+        If quantmush.Text <> "" Then
+            Dim quant = CDec(quantmush.Text)
+            If quant > stckmush.Text Then
+                MessageBox.Show("Not enough stock", "Error!")
+                quantmush.Text = ""
+            End If
+            itemcost(6) = (quant * 550)
+        Else
+            quantmush.Text = ""
+        End If
+        If stckmush.Text < 10 And stckmush.Text > 5 Then
+            stckmush.ForeColor = Color.DarkOrange
+        ElseIf stckmush.Text > 0 And stckmush.Text < 6 Then
+            stckmush.ForeColor = Color.Red
+        ElseIf stckmush.Text <= 0 Then
+            chkmush.Text = "OUT OF STOCK"
+            chkmush.Enabled = False
+            stckmush.ForeColor = Color.Red
+        Else
+            stckmush.ForeColor = Color.Lime
+        End If
+    End Sub
+
+    Private Sub btnvoid_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnvoid.Click
+        If IsNothing(DataGridView1.CurrentRow) Then
+            MessageBox.Show("Make an order first", "Error! Empty Data Table")
+        Else
+            panelvoid.Visible = True
+            confirmadmin.Text = ""
+            confirmadmin.Focus()
+        End If
+
+    End Sub
+
+
+    Private Sub txtamounttendered_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles txtamounttendered.TextChanged
+        
+    End Sub
+
+    Private Sub regular_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles regular.CheckedChanged
+        txtvat.Text = "Php: " & ttlprice * 0.12
+        txtdiscount.Text = "0%"
+        txtsubtotal.Text = "Php: " & ttlprice - (ttlprice * 0.12)
+        txtpayable.Text = ttlprice
+    End Sub
+
+    Private Sub pwd_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles pwd.CheckedChanged
+        Dim ttlprice1 As Decimal
+        ttlprice1 = ttlprice - (ttlprice * 0.15)
+        txtvat.Text = "Php: " & ttlprice1 * 0.12
+        txtdiscount.Text = "15%"
+        txtsubtotal.Text = "Php: " & ttlprice1 - (ttlprice1 * 0.12)
+        txtpayable.Text = ttlprice1
+    End Sub
+
+    Private Sub seniorcitizen_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles seniorcitizen.CheckedChanged
+        Dim ttlprice2 As Decimal
+        ttlprice2 = ttlprice - (ttlprice * 0.2)
+        txtvat.Text = "Php: " & ttlprice2 * 0.12
+        txtdiscount.Text = "20%"
+        txtsubtotal.Text = "Php: " & ttlprice2 - (ttlprice2 * 0.12)
+        txtpayable.Text = ttlprice2
+    End Sub
+
+    Private Sub entervoid_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles entervoid.Click
+            If confirmadmin.Text = "admin" Then
+                Dim balikstock = Convert.ToInt32(DataGridView1.CurrentRow.Cells(4).Value)
+            Dim itemname = DataGridView1.CurrentRow.Cells(1).Value.ToString
+            If itemname = "CHILIPEPPER X BACON" Then
+                stckbac.Text = stckbac.Text + balikstock
+                stckchil.Text = stckchil.Text + balikstock
+                MessageBox.Show(itemname & " Stock updated", "Success!")
+                chkbac.Text = "Bacon"
+                chkbac.Enabled = True
+                chkchil.Text = "Chili Pepper"
+                chkchil.Enabled = True
+            End If
+            If itemname = "MUSHROOMS X VERONESE" Then
+                stckmush.Text = stckmush.Text + balikstock
+                stckver.Text = stckver.Text + balikstock
+                MessageBox.Show(itemname & " Stock updated", "Success!")
+                chkver.Text = "Veronese"
+                chkver.Enabled = True
+                chkmush.Text = "Mushrooms"
+                chkmush.Enabled = True
+            End If
+            If itemname = "CHILIPEPPER X VEGETARIAN" Then
+                stckveg.Text = stckveg.Text + balikstock
+                stckchil.Text = stckchil.Text + balikstock
+                MessageBox.Show(itemname & " Stock updated", "Success!")
+                chkveg.Text = "Vegetarian"
+                chkveg.Enabled = True
+                chkchil.Text = "Chili Pepper"
+                chkchil.Enabled = True
+            End If
+                If itemname = "MOZZARELLA" Then
+                    stckmoz.Text = stckmoz.Text + balikstock
+                    MessageBox.Show(itemname & " Stock updated", "Success!")
+                    chkmoz.Text = "Mozzarella"
+                    chkmoz.Enabled = True
+                End If
+                If stckmoz.Text < 10 And stckmoz.Text > 5 Then
+                    stckmoz.ForeColor = Color.DarkOrange
+                ElseIf stckmoz.Text > 0 And stckmoz.Text < 6 Then
+                    stckmoz.ForeColor = Color.Red
+                Else
+                    stckmoz.ForeColor = Color.Lime
+                End If
+                If itemname = "WHITE BREAD" Then
+                    stckwhite.Text = stckwhite.Text + balikstock
+                    MessageBox.Show(itemname & " Stock updated", "Success!")
+                    chkwhite.Text = "White Bread"
+                    chkwhite.Enabled = True
+                End If
+                If stckwhite.Text < 10 And stckwhite.Text > 5 Then
+                    stckwhite.ForeColor = Color.DarkOrange
+                ElseIf stckwhite.Text > 0 And stckwhite.Text < 6 Then
+                    stckwhite.ForeColor = Color.Red
+                Else
+                    stckwhite.ForeColor = Color.Lime
+                End If
+                If itemname = "BACON" Then
+                    stckbac.Text = stckbac.Text + balikstock
+                    MessageBox.Show(itemname & " Stock updated", "Success!")
+                    chkbac.Text = "Bacon"
+                    chkbac.Enabled = True
+                End If
+                If stckbac.Text < 10 And stckbac.Text > 5 Then
+                    stckbac.ForeColor = Color.DarkOrange
+                ElseIf stckbac.Text > 0 And stckbac.Text < 6 Then
+                    stckbac.ForeColor = Color.Red
+                Else
+                    stckbac.ForeColor = Color.Lime
+                End If
+                If itemname = "WHEAT BREAD" Then
+                    stckwheat.Text = stckwheat.Text + balikstock
+                    MessageBox.Show(itemname & " Stock updated", "Success!")
+                    chkwheat.Text = "Wheat Bread"
+                    chkwheat.Enabled = True
+                End If
+                If stckwheat.Text < 10 And stckwheat.Text > 5 Then
+                    stckwheat.ForeColor = Color.DarkOrange
+                ElseIf stckwheat.Text > 0 And stckwheat.Text < 6 Then
+                    stckwheat.ForeColor = Color.Red
+                Else
+                    stckwheat.ForeColor = Color.Lime
+                End If
+                If itemname = "CHILI PEPPER" Then
+                    stckchil.Text = stckchil.Text + balikstock
+                    MessageBox.Show(itemname & " Stock updated", "Success!")
+                    chkchil.Text = "Chili Pepper"
+                    chkchil.Enabled = True
+                End If
+                If stckchil.Text < 10 And stckchil.Text > 5 Then
+                    stckchil.ForeColor = Color.DarkOrange
+                ElseIf stckchil.Text > 0 And stckchil.Text < 6 Then
+                    stckchil.ForeColor = Color.Red
+                Else
+                    stckchil.ForeColor = Color.Lime
+                End If
+                If itemname = "MUSHROOMS" Then
+                    stckmush.Text = stckmush.Text + balikstock
+                    MessageBox.Show(itemname & " Stock updated", "Success!")
+                    chkmush.Text = "Mushrooms"
+                    chkmush.Enabled = True
+                End If
+                If stckmush.Text < 10 And stckmush.Text > 5 Then
+                    stckmush.ForeColor = Color.DarkOrange
+                ElseIf stckmush.Text > 0 And stckmush.Text < 6 Then
+                    stckmush.ForeColor = Color.Red
+                Else
+                    stckmush.ForeColor = Color.Lime
+                End If
+                If itemname = "VEGETARIAN" Then
+                    stckveg.Text = stckveg.Text + balikstock
+                    MessageBox.Show(itemname & " Stock updated", "Success!")
+                    chkveg.Text = "Vegetarian"
+                    chkveg.Enabled = True
+                End If
+                If stckveg.Text < 10 And stckveg.Text > 5 Then
+                    stckveg.ForeColor = Color.DarkOrange
+                ElseIf stckveg.Text > 0 And stckveg.Text < 6 Then
+                    stckveg.ForeColor = Color.Red
+                Else
+                    stckveg.ForeColor = Color.Lime
+                End If
+                If itemname = "VERONESE" Then
+                    stckver.Text = stckver.Text + balikstock
+                    MessageBox.Show(itemname & " Stock updated", "Success!")
+                    chkver.Text = "Veronese"
+                    chkver.Enabled = True
+                End If
+                If stckver.Text < 10 And stckver.Text > 5 Then
+                    stckver.ForeColor = Color.DarkOrange
+                ElseIf stckver.Text > 0 And stckver.Text < 6 Then
+                    stckver.ForeColor = Color.Red
+                Else
+                    stckver.ForeColor = Color.Lime
+                End If
+                If itemname = "ROLLS" Then
+                    stckrolls.Text = stckrolls.Text + balikstock
+                    MessageBox.Show(itemname & " Stock updated", "Success!")
+                    chkrolls.Text = "Rolls"
+                    chkrolls.Enabled = True
+                End If
+                If stckrolls.Text < 10 And stckrolls.Text > 5 Then
+                    stckrolls.ForeColor = Color.DarkOrange
+                ElseIf stckrolls.Text > 0 And stckrolls.Text < 6 Then
+                    stckrolls.ForeColor = Color.Red
+                Else
+                    stckrolls.ForeColor = Color.Lime
+                End If
+                If itemname = "FRENCH BREAD" Then
+                    stckfrench.Text = stckfrench.Text + balikstock
+                    MessageBox.Show(itemname & " Stock updated", "Success!")
+                    chkfrench.Text = "French Bread"
+                    chkfrench.Enabled = True
+                End If
+                If stckfrench.Text < 10 And stckfrench.Text > 5 Then
+                    stckfrench.ForeColor = Color.DarkOrange
+                ElseIf stckfrench.Text > 0 And stckfrench.Text < 6 Then
+                    stckfrench.ForeColor = Color.Red
+                Else
+                    stckfrench.ForeColor = Color.Lime
+                End If
+                If itemname = "BANANA BREAD" Then
+                    stckbana.Text = stckbana.Text + balikstock
+                    MessageBox.Show(itemname & " Stock updated", "Success!")
+                    chkbana.Text = "Banana Bread"
+                    chkbana.Enabled = True
+                End If
+                If stckbana.Text < 10 And stckbana.Text > 5 Then
+                    stckbana.ForeColor = Color.DarkOrange
+                ElseIf stckbana.Text > 0 And stckbana.Text < 6 Then
+                    stckbana.ForeColor = Color.Red
+                Else
+                    stckbana.ForeColor = Color.Lime
+                End If
+                If itemname = "HOTDOG BUN" Then
+                    stckhot.Text = stckhot.Text + balikstock
+                    MessageBox.Show(itemname & " Stock updated", "Success!")
+                    chkhot.Text = "Hotdog Bun"
+                    chkhot.Enabled = True
+                End If
+                If stckhot.Text < 10 And stckhot.Text > 5 Then
+                    stckhot.ForeColor = Color.DarkOrange
+                ElseIf stckhot.Text > 0 And stckhot.Text < 6 Then
+                    stckhot.ForeColor = Color.Red
+                Else
+                    stckhot.ForeColor = Color.Lime
+                End If
+                If itemname = "ESPRESSO" Then
+                    stckespr.Text = stckespr.Text + balikstock
+                    MessageBox.Show(itemname & " Stock updated", "Success!")
+                    chkespr.Text = "Espresso"
+                    chkespr.Enabled = True
+                End If
+                If stckespr.Text < 10 And stckespr.Text > 5 Then
+                    stckespr.ForeColor = Color.DarkOrange
+                ElseIf stckespr.Text > 0 And stckespr.Text < 6 Then
+                    stckespr.ForeColor = Color.Red
+                Else
+                    stckespr.ForeColor = Color.Lime
+                End If
+                If itemname = "DOPPIO" Then
+                    stckdop.Text = stckdop.Text + balikstock
+                    MessageBox.Show(itemname & " Stock updated", "Success!")
+                    chkdop.Text = "Doppio"
+                    chkdop.Enabled = True
+                End If
+                If stckdop.Text < 10 And stckdop.Text > 5 Then
+                    stckdop.ForeColor = Color.DarkOrange
+                ElseIf stckdop.Text > 0 And stckdop.Text < 6 Then
+                    stckdop.ForeColor = Color.Red
+                Else
+                    stckdop.ForeColor = Color.Lime
+                End If
+                If itemname = "AMERICANO" Then
+                    stckamer.Text = stckamer.Text + balikstock
+                    MessageBox.Show(itemname & " Stock updated", "Success!")
+                    chkamer.Text = "Americano"
+                    chkamer.Enabled = True
+                End If
+                If stckamer.Text < 10 And stckamer.Text > 5 Then
+                    stckamer.ForeColor = Color.DarkOrange
+                ElseIf stckamer.Text > 0 And stckamer.Text < 6 Then
+                    stckamer.ForeColor = Color.Red
+                Else
+                    stckamer.ForeColor = Color.Lime
+                End If
+            If itemname = "CAPPUCCINO" Then
+                stckcapp.Text = stckcapp.Text + balikstock
+                MessageBox.Show(itemname & " Stock updated", "Success!")
+                chkcapp.Text = "Cappuccino"
+                chkcapp.Enabled = True
+            End If
+                If stckcapp.Text < 10 And stckcapp.Text > 5 Then
+                    stckcapp.ForeColor = Color.DarkOrange
+                ElseIf stckcapp.Text > 0 And stckcapp.Text < 6 Then
+                    stckcapp.ForeColor = Color.Red
+                Else
+                    stckcapp.ForeColor = Color.Lime
+                End If
+                If itemname = "LATTE" Then
+                    stcklatt.Text = stcklatt.Text + balikstock
+                    MessageBox.Show(itemname & " Stock updated", "Success!")
+                    chklatt.Text = "Latte"
+                    chklatt.Enabled = True
+                End If
+                If stcklatt.Text < 10 And stcklatt.Text > 5 Then
+                    stcklatt.ForeColor = Color.DarkOrange
+                ElseIf stcklatt.Text > 0 And stcklatt.Text < 6 Then
+                    stcklatt.ForeColor = Color.Red
+                Else
+                    stcklatt.ForeColor = Color.Lime
+                End If
+                If itemname = "MACCHIATO" Then
+                    stckmacch.Text = stckmacch.Text + balikstock
+                    MessageBox.Show(itemname & " Stock updated", "Success!")
+                    chkmacch.Text = "Macchiato"
+                    chkmacch.Enabled = True
+                End If
+                If stckmacch.Text < 10 And stckmacch.Text > 5 Then
+                    stckmacch.ForeColor = Color.DarkOrange
+                ElseIf stckmacch.Text > 0 And stckmacch.Text < 6 Then
+                    stckmacch.ForeColor = Color.Red
+                Else
+                    stckmacch.ForeColor = Color.Lime
+                End If
+                If itemname = "LOCAL CAFE" Then
+                    stckloc.Text = stckloc.Text + balikstock
+                    MessageBox.Show(itemname & " Stock updated", "Success!")
+                    chkloc.Text = "LOCAL CAFE"
+                    chkloc.Enabled = True
+                End If
+                If stckloc.Text < 10 And stckloc.Text > 5 Then
+                    stckloc.ForeColor = Color.DarkOrange
+                ElseIf stckloc.Text > 0 And stckloc.Text < 6 Then
+                    stckloc.ForeColor = Color.Red
+                Else
+                    stckloc.ForeColor = Color.Lime
+                End If
+                For Each row As DataGridViewRow In DataGridView1.SelectedRows
+                    DataGridView1.Rows.Remove(row)
+                Next
+                If DataGridView1.RowCount > 0 Then
+                    Dim iTotal As Integer = 0
+
+                    For index As Integer = 0 To DataGridView1.RowCount - 1
+                        iTotal += Convert.ToInt32(DataGridView1.Rows(index).Cells(5).Value)
+                    Next
+                    If regular.Checked Then
+                        Dim xtotal As Double = iTotal
+                        txtvat.Text = "Php: " & xtotal * 0.12
+                        txtdiscount.Text = "0%"
+                        txtsubtotal.Text = "Php: " & xtotal - (xtotal * 0.12)
+                        txtpayable.Text = xtotal
+                    ElseIf seniorcitizen.Checked Then
+                        Dim xtotal As Double = iTotal
+                        xtotal = xtotal - (xtotal * 0.2)
+                        txtvat.Text = "Php: " & xtotal * 0.12
+                        txtdiscount.Text = "20%"
+                        txtsubtotal.Text = "Php: " & xtotal - (xtotal * 0.12)
+                        txtpayable.Text = xtotal
+                    ElseIf pwd.Checked Then
+                        Dim xtotal As Double = iTotal
+                        xtotal = xtotal - (xtotal * 0.15)
+                        txtvat.Text = "Php: " & xtotal * 0.12
+                        txtdiscount.Text = "15%"
+                        txtsubtotal.Text = "Php: " & xtotal - (xtotal * 0.12)
+                        txtpayable.Text = xtotal
+                    Else
+                    End If
+            End If
+            panelvoid.Visible = False
+            confirmadmin.Text = ""
+            confirmadmin.Focus()
+            Else
+            MessageBox.Show("Wrong Password Please Try Again")
+            confirmadmin.Text = ""
+            confirmadmin.Focus()
+        End If
+        If DataGridView1.RowCount < 1 Then
+            txtamounttendered.Text = Nothing
+            txtchange.Text = Nothing
+            txtdiscount.Text = Nothing
+            txtpayable.Text = Nothing
+            txtsubtotal.Text = Nothing
+            txtvat.Text = Nothing
+        End If
+    End Sub
+
+    Private Sub cancelvoid_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cancelvoid.Click
+        panelvoid.Visible = False
+    End Sub
+
+    Private Sub btnnew_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnnew.Click
+        panelreceipt.Visible = False
+        DataGridView1.Rows.Clear()
+        btnbread.Enabled = True
+        pwd.Enabled = True
+        regular.Enabled = True
+        seniorcitizen.Enabled = True
+        btnpay.Enabled = True
+        btnvoid.Enabled = True
+        btncoffee.Enabled = True
+        btnpizza.Enabled = True
+        btncheck.Enabled = True
+        txtvat.Text = ""
+        txtamounttendered.Text = ""
+        txtchange.Text = ""
+        txtname.Text = ""
+        txtpayable.Text = ""
+        txtsubtotal.Text = ""
+        txtdiscount.Text = ""
+    End Sub
+
+    Private Sub btnpay_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnpay.Click
+        If DataGridView1.Rows.Count < 1 Then
+            MessageBox.Show("Cell is empty")
+            txtamounttendered.Focus()
+        Else
+
+            If txtamounttendered.Text <> "" Then
+                Dim amount = CDec(txtpayable.Text)
+                If amount <= txtamounttendered.Text And txtamounttendered.Text > 0 Then
+                    MessageBox.Show("Thank you for using our service!", "Success")
+                    txtchange.Text = (txtamounttendered.Text - amount)
+                    btnreceipt.Enabled = True
+                    btnpay.Enabled = False
+                    btnvoid.Enabled = False
+                    regular.Enabled = False
+                    pwd.Enabled = False
+                    seniorcitizen.Enabled = False
+                    btnbread.Enabled = False
+                    btncoffee.Enabled = False
+                    btnpizza.Enabled = False
+                    btncheck.Enabled = False
+
+                ElseIf txtamounttendered.Text = 0 Then
+                    MessageBox.Show("Zero tendered amount", "Error!")
+                    txtamounttendered.Text = ""
+                    txtamounttendered.Focus()
+                Else
+                    MessageBox.Show("Not enough money", "Insuffcient tendered amount")
+                    txtamounttendered.Text = ""
+                    txtamounttendered.Focus()
+                End If
+            Else
+                MessageBox.Show("Enter tendered amount first", "Error!")
+                txtamounttendered.Focus()
+            End If
+        End If
+    End Sub
+
+    Private Sub btnreceipt_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnreceipt.Click
+
+        panelreceipt.Visible = False
+        pnlbread.Visible = False
+        pnlcoffee.Visible = False
+        pnllist.Visible = False
+        pnlpizza.Visible = False
+        panelhome.Visible = True
+        marklist.Visible = False
+        customernamepanel.Visible = True
+        customername = txtname.Text
+        resibo.Clear()
+        resibo.AppendText(vbNewLine & vbTab & vbTab & "Thank you for coming " & customername & vbNewLine & "                  Please come again!" & vbNewLine)
+        resibo.AppendText(vbNewLine & "               CompEngLangMalakas.Corp" & vbNewLine)
+        resibo.AppendText("                 Brgy.Iniwanan, Pinagpalit St." & vbNewLine)
+        resibo.AppendText("                       Tel No: 0201234567" & vbNewLine)
+        resibo.AppendText(vbNewLine & vbNewLine)
+        resibo.AppendText(vbTab & "QTY" & vbTab & "ITEM" & vbTab & vbTab & vbTab & "TOTAL" & vbNewLine & vbNewLine)
+        For index As Integer = 0 To DataGridView1.RowCount - 1
+            resibo.AppendText(vbTab & Convert.ToInt32(DataGridView1.Rows(index).Cells(4).Value) & vbTab & Convert.ToString(DataGridView1.Rows(index).Cells(1).Value) & vbTab & vbTab & Convert.ToInt32(DataGridView1.Rows(index).Cells(5).Value) & ".00" + vbNewLine)
+        Next
+        resibo.AppendText(vbNewLine & "  ****************************************************")
+        resibo.AppendText(vbNewLine & vbTab & " VAT             : " & vbTab & vbTab & vbTab & txtvat.Text)
+        resibo.AppendText(vbNewLine & vbTab & " Discount        : " + vbTab + vbTab & vbTab & txtdiscount.Text)
+        resibo.AppendText(vbNewLine & vbTab & " Sub Total       : " + vbTab + vbTab & vbTab & txtsubtotal.Text)
+        resibo.AppendText(vbNewLine & vbTab & " Payable Amount  : " + vbTab & vbTab & "Php: " & txtpayable.Text)
+        resibo.AppendText(vbNewLine & vbTab & " Amount Tendered : " + vbTab & vbTab & "Php: " & txtamounttendered.Text)
+        resibo.AppendText(vbNewLine & vbTab & " Amount Change   : " + vbTab & vbTab & "Php: " & txtchange.Text)
+        resibo.AppendText(vbNewLine & "  ****************************************************" & vbNewLine)
+        resibo.AppendText(vbNewLine & vbTab & " Cashier Name: " & cashier)
+        txtname.Focus()
+    End Sub
+
+    Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
+        panelreceipt.Visible = True
+        pnlbread.Visible = False
+        pnlcoffee.Visible = False
+        pnllist.Visible = False
+        pnlpizza.Visible = False
+        panelhome.Visible = True
+        marklist.Visible = False
+        customernamepanel.Visible = False
+
+    End Sub
+
+    Private Sub editstocks_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles editstocks.Click
+        Me.Hide()
+        Form2.Show()
+        Form2.confirmadmin.Focus()
+        Form2.Panel1.Visible = False
+        Form2.Button1.Visible = False
+        Form2.Button2.Visible = False
+        Form2.Button3.Visible = False
+        Form2.loginpanel.Visible = True
+    End Sub
+
+    Private Sub Timer2_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer2.Tick
+
+        Dim x As Integer = +1
+        pictures.Image = My.Resources.ResourceManager.GetObject("ADS" & r.Next(x, 8))
+
+    End Sub
+
+    Private Sub PictureBox1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PictureBox1.Click
+        panelhome.Visible = True
+        markbread.Visible = False
+        markcoffee.Visible = False
+        markcombo.Visible = False
+        marklist.Visible = False
+        markpiz.Visible = False
+    End Sub
+End Class
